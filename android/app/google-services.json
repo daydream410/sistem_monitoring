@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "582300207089",
+    "firebase_url": "https://minreg-d83b6-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "minreg-d83b6",
+    "storage_bucket": "minreg-d83b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582300207089:android:bace57a2656df118726650",
+        "android_client_info": {
+          "package_name": "com.example.sistem_monitoring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582300207089-o08421li0u4ubmbqp0abr81ji99b1sod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8TaX1Xi3Bz3TIGrnhdWOrA1nceRcEkLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582300207089-480cbji1fq9ai5fo0tl04v9agi9o3ehv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "582300207089-tq954jt6rcfe3gt63otnng677aqmsecn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mpdev.smartHome"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
