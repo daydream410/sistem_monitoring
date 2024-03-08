@@ -345,21 +345,30 @@ class _DashboardPageState extends State<DashboardPage> {
                                 const SizedBox(
                                   height: 10,
                                 ),
+                                // ringan = merah, sedang = oren, berat = hijau
                                 Text(
                                   '${snapshot.data?.docs[0]['beban']} kg (${snapshot.data?.docs[0]['statusbeban']})',
-                                  style: snapshot.data?.docs[0]
+                                  style: (snapshot.data?.docs[0]
                                               ['statusbeban'] ==
-                                          'Berat'
+                                          'Berat')
                                       ? TextStyle(
-                                          color: Colors.red.shade400,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                        )
-                                      : TextStyle(
                                           color: Colors.greenAccent.shade400,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
-                                        ),
+                                        )
+                                      : (snapshot.data?.docs[0]
+                                                  ['statusbeban'] ==
+                                              'Sedang')
+                                          ? TextStyle(
+                                              color: Colors.orange.shade400,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            )
+                                          : TextStyle(
+                                              color: Colors.red.shade400,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                            ),
                                 ),
                               ],
                             ),
@@ -460,6 +469,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                                   modem = false;
                                                   nilaiModem = 0;
                                                   _updateModem();
+                                                  Get.snackbar(
+                                                    'Success',
+                                                    'Successfully Turn Off Modem',
+                                                    backgroundColor: Colors.red,
+                                                    colorText: Colors.white,
+                                                    duration: const Duration(
+                                                        seconds: 1),
+                                                  );
                                                 },
                                               );
                                             } else {
@@ -477,6 +494,15 @@ class _DashboardPageState extends State<DashboardPage> {
                                                   modem = true;
                                                   nilaiModem = 1;
                                                   _updateModem();
+                                                  Get.snackbar(
+                                                    'Success',
+                                                    'Successfully Turn On Modem',
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                    colorText: Colors.white,
+                                                    duration: const Duration(
+                                                        seconds: 1),
+                                                  );
                                                 },
                                               );
                                             }
@@ -541,6 +567,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 digitizer = false;
                                                 nilaiDigitizer = 0;
                                                 _updateDigitizer();
+                                                Get.snackbar(
+                                                  'Success',
+                                                  'Successfully Turn Off Digitizer',
+                                                  backgroundColor: Colors.red,
+                                                  colorText: Colors.white,
+                                                  duration: const Duration(
+                                                      seconds: 1),
+                                                );
                                               },
                                             );
                                           } else {
@@ -558,6 +592,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                                 digitizer = true;
                                                 nilaiDigitizer = 1;
                                                 _updateDigitizer();
+                                                Get.snackbar(
+                                                  'Success',
+                                                  'Successfully Turn On Digitizer',
+                                                  backgroundColor: Colors.green,
+                                                  colorText: Colors.white,
+                                                  duration: const Duration(
+                                                      seconds: 1),
+                                                );
                                               },
                                             );
                                           }

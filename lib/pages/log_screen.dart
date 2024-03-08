@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -5,6 +7,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:sistem_monitoring/controllers/controller.dart';
 import 'package:sistem_monitoring/routes/route_name.dart';
+
+import '../controllers/notif.dart';
 
 class LogPage extends StatefulWidget {
   const LogPage({super.key});
@@ -35,6 +39,21 @@ class _LogPageState extends State<LogPage> {
       11: "November",
       12: "December",
     };
+
+    Stream<QuerySnapshot<Map<String, dynamic>>> notificationStream =
+        FirebaseFirestore.instance.collection('log').snapshots();
+    notificationStream.listen(
+      (event) {
+        if (event.docs.isEmpty) {
+          return;
+        }
+        NotificationService.showSimpleNotification(
+          title: 'Beep beeep!',
+          body: 'Data Log Baru',
+          payload: 'Manajemen Log',
+        );
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -85,7 +104,7 @@ class _LogPageState extends State<LogPage> {
             //   height: 20,
             // ),
             Container(
-              height: size.height * 0.70,
+              height: size.height * 0.80,
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),

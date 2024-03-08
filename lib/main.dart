@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:sistem_monitoring/controllers/controller.dart';
+import 'package:sistem_monitoring/controllers/notif.dart';
 import 'package:sistem_monitoring/pages/login_screen.dart';
 import 'package:sistem_monitoring/routes/page_route.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.init();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: "AIzaSyD8TaX1Xi3Bz3TIGrnhdWOrA1nceRcEkLw",

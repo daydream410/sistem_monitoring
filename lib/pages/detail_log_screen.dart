@@ -349,18 +349,25 @@ class _DetailLogState extends State<DetailLog> {
                                   ),
                                   Text(
                                     '${snapshot.data!['beban']} kg (${snapshot.data!['statusbeban']})',
-                                    style: snapshot.data!['statusbeban'] ==
-                                            'Berat'
+                                    style: (snapshot.data!['statusbeban'] ==
+                                            'Berat')
                                         ? TextStyle(
-                                            color: Colors.red.shade400,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                          )
-                                        : TextStyle(
                                             color: Colors.greenAccent.shade400,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20,
-                                          ),
+                                          )
+                                        : (snapshot.data!['statusbeban'] ==
+                                                'Sedang')
+                                            ? TextStyle(
+                                                color: Colors.orange.shade400,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              )
+                                            : TextStyle(
+                                                color: Colors.red.shade400,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
                                   ),
                                 ],
                               ),
