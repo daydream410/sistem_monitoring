@@ -69,40 +69,45 @@ class _LogPageState extends State<LogPage> {
         child: SafeArea(
             child: Column(
           children: [
-            // SizedBox(
-            //   height: size.height * 0.02,
-            // ),
-            // Center(
-            //   child: Container(
-            //     width: size.width * 0.8,
-            //     height: size.height * 0.06,
-            //     decoration: BoxDecoration(
-            //       color: Colors.white,
-            //       borderRadius: BorderRadius.circular(10.0),
-            //       boxShadow: const [
-            //         BoxShadow(
-            //             color: Colors.grey,
-            //             blurRadius: 2.0,
-            //             offset: Offset(2.0, 2.0))
-            //       ],
-            //     ),
-            //     child: TextField(
-            //       onChanged: (value) {
-            //         setState(() {
-            //           searchLog = value.toUpperCase();
-            //         });
-            //       },
-            //       decoration: const InputDecoration(
-            //         prefixIcon: Icon(Icons.search_rounded),
-            //         border: OutlineInputBorder(),
-            //         hintText: 'Search',
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            Center(
+              child: Container(
+                width: size.width * 0.8,
+                height: size.height * 0.06,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 2.0,
+                        offset: Offset(2.0, 2.0))
+                  ],
+                ),
+                child: TextField(
+                  // onChanged: (value) {
+                  //   setState(() {
+                  //     searchLog = value.toUpperCase();
+                  //   });
+                  // },
+                  onSubmitted: (value) {
+                    setState(() {
+                      searchLog = value.toUpperCase();
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.search_rounded),
+                    border: OutlineInputBorder(),
+                    hintText: 'Search',
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             Container(
               height: size.height * 0.80,
               decoration: const BoxDecoration(
@@ -111,11 +116,10 @@ class _LogPageState extends State<LogPage> {
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('log')
-                      .orderBy('tanggal', descending: true)
-                      // .orderBy('statusperangkat')
-                      // .startAt([searchLog]).endAt(
-                      //     ["$searchLog\uf8ff"])
-                      .snapshots(),
+                      // .orderBy('tanggal', descending: true)
+                      .orderBy('statusperangkat')
+                      .startAt([searchLog]).endAt(
+                          ["$searchLog\uf8ff"]).snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.active) {
                       if (snapshot.hasData) {
