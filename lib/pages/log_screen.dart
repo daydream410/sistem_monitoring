@@ -3,11 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:intl/intl.dart';
-import 'package:sistem_monitoring/controllers/controller.dart';
 import 'package:sistem_monitoring/routes/route_name.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/notif.dart';
 
 class LogPage extends StatefulWidget {
@@ -20,10 +17,25 @@ class LogPage extends StatefulWidget {
 class _LogPageState extends State<LogPage> {
   var searchLog = "";
   var dataTimestamp;
+  var index_value;
+
+  @override
+  void initState() {
+    super.initState();
+    getTotalData();
+  }
+
+  getTotalData() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    index_value = sharedPreferences.getInt('totalData');
+    print('bbbbbbbbbb' + index_value.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final myController = Get.put(Controller());
+    var totalData = 0;
 
     var _numberToMonth = {
       1: "Janurai",
@@ -41,19 +53,36 @@ class _LogPageState extends State<LogPage> {
     };
 
     Stream<QuerySnapshot<Map<String, dynamic>>> notificationStream =
-        FirebaseFirestore.instance.collection('log').snapshots();
+        FirebaseFirestore.instance
+            .collection('log')
+            // .orderBy('tanggal', descending: true)
+            .orderBy('statusperangkat')
+            .startAt([searchLog]).endAt(["$searchLog\uf8ff"]).snapshots();
     notificationStream.listen(
       (event) {
         if (event.docs.isEmpty) {
           return;
         }
-        NotificationService.showSimpleNotification(
-          title: 'Beep beeep!',
-          body: 'Data Log Baru',
-          payload: 'Manajemen Log',
-        );
+        totalData = event.docs.length;
+        print(totalData);
+        if (event.docs.length != index_value) {
+          print('aaaaaaaaaaa');
+          NotificationService.showSimpleNotification(
+            title: 'Beep beeep!',
+            body: 'Data Log Baru',
+            payload: 'Manajemen Log',
+          );
+        }
       },
     );
+
+    setTotalData() async {
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setInt('totalData', totalData);
+
+      print('total data ' + totalData.toString());
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -109,20 +138,16 @@ class _LogPageState extends State<LogPage> {
               height: 20,
             ),
             Container(
-              height: size.height * 0.80,
+              height: size.height * 0.70,
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
               child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('log')
-                      // .orderBy('tanggal', descending: true)
-                      .orderBy('statusperangkat')
-                      .startAt([searchLog]).endAt(
-                          ["$searchLog\uf8ff"]).snapshots(),
+                  stream: notificationStream,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.active) {
                       if (snapshot.hasData) {
+                        setTotalData();
                         return ListView.separated(
                           padding: const EdgeInsets.all(16),
                           physics: const BouncingScrollPhysics(),
